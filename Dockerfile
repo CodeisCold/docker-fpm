@@ -42,6 +42,12 @@ RUN apt-get update \
 	&& pecl install yaf \
 	&& pecl install swoole
 
+# imagemagick 图片处理库的安装
+COPY ImageMagick.tar.gz /app
+RUN mkdir /source && mv ImageMagick.tar.gz /source/ && cd /source \
+	&& tar -zxf ImageMagick.tar.gz && cd /source/ImageMagick-7.0.8-45 && ./configure && make && make install \
+	&& pecl install imagick
+
 # 复制 php.ini 和 fpm进程池配置文件 www.conf
 # COPY php.ini /usr/local/etc/php/
 # COPY www.conf /usr/local/etc/php-fpm.d/www.conf
