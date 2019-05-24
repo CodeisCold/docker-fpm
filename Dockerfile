@@ -7,7 +7,7 @@ WORKDIR /app
 
 # 安装扩展 docker-php-ext-install [-jN] ext-name [ext-name ...]
 
-# 尽可能减少 RUN 的次数来减少 image 的层数
+# 尽可能减少 RUN 的次数来减少 image 的层数，但是 apt-get update 很慢，最好别动这层的 RUN
 # 安装gd库
 RUN apt-get update \
 	&& apt-get install -y \
@@ -34,13 +34,16 @@ RUN apt-get update \
 # sysvshm 	System V共享内存
 # sockets	socket通讯
 # zip 		zip压缩
+# mcrypt	加密扩展
 # 以及安装其他扩展
 	&& docker-php-ext-install -j$(nproc) opcache mysqli pdo pdo_mysql pdo_pgsql gettext \
 	bcmath soap pcntl shmop sysvmsg sysvsem sysvshm sockets zip \
 	&& pecl install xdebug \
 	&& pecl install redis \
 	&& pecl install yaf \
-	&& pecl install swoole
+	&& pecl install swoole \
+	&& apt-get install libmcrypt-dev -y \
+	&& pecl install mcrypt-1.0.2
 
 # imagemagick 图片处理库的安装
 COPY ImageMagick.tar.gz /app
