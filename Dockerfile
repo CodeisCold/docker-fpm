@@ -35,6 +35,7 @@ RUN apt-get update \
 # sockets	socket通讯
 # zip 		zip压缩
 # mcrypt	加密扩展
+# mongodb	mongodb 连接
 # 以及安装其他扩展
 	&& docker-php-ext-install -j$(nproc) opcache mysqli pdo pdo_mysql pdo_pgsql gettext \
 	bcmath soap pcntl shmop sysvmsg sysvsem sysvshm sockets zip \
@@ -43,7 +44,8 @@ RUN apt-get update \
 	&& pecl install yaf \
 	&& pecl install swoole \
 	&& apt-get install libmcrypt-dev -y \
-	&& pecl install mcrypt-1.0.2
+	&& pecl install mcrypt-1.0.2 \
+	&& pecl install mongodb
 
 # imagemagick 图片处理库的安装
 COPY ImageMagick.tar.gz /app
