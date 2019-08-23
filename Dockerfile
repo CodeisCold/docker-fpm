@@ -59,6 +59,7 @@ COPY php-xhprof-extension-master /source/php-xhprof-extension
 RUN cd /source/php-xhprof-extension && phpize && ./configure && make && make install
 
 COPY composer.phar /usr/bin/composer
+COPY phpunit-6.5.3.phar /usr/bin/phpunit
 
 # 复制 php.ini 和 fpm进程池配置文件 www.conf
 # COPY php.ini /usr/local/etc/php/
